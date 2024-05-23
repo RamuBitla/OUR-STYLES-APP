@@ -1,9 +1,9 @@
 import React from "react";
 import { useAuthContext } from "../../Hooks/useAuthContext";
 import { useLogout } from "../../Hooks/useLogout";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import './style.module.css'
+import styles from "./style.module.css";
 
 const Logout = () => {
   const { user } = useAuthContext();
@@ -19,8 +19,8 @@ const Logout = () => {
   return (
     <div>
       {user && (
-        <div className="logout">
-          <span>{user.email}</span>
+        <div className={styles.logout}>
+          <span>{user.name}</span>
           <button onClick={handleLogout}>Logout</button>
         </div>
       )}

@@ -1,24 +1,27 @@
 import React, { useState } from 'react'
 import style from '../style.module.css';
 
+import { FaAngleDown } from "react-icons/fa6";
+
+
 const FAQ = () => {
 
     const data = [
         {
-            question : "Question 1?",
-        answers: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta dolore, inventore fugiat tempora dignissimos expedita illo sequi eos libero minus, suscipit quia vero ipsa blanditiis! Dignissimos, sequi qui."
+            question : "What types of t-shirts do you offer?",
+        answers: "Currently we only offer a White Unisex fit T-shirt, but we're working towards give you more options as soon as possible. We have a range of sizes available, from small to 3XL."
         },
         {
-            question : "Question 2?",
-        answers: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta dolore, inventore fugiat tempora dignissimos expedita illo sequi eos libero minus, suscipit quia vero ipsa blanditiis! Dignissimos, sequi qui."
+            question : "How do I choose the right size t-shirt?",
+        answers: "We provide a size chart on our website to help you find the best fit for your body. You can also refer to the size chart included on the product page for each t-shirt style."
         },
         {
-            question : "Question 3?",
-        answers: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta dolore, inventore fugiat tempora dignissimos expedita illo sequi eos libero minus, suscipit quia vero ipsa blanditiis! Dignissimos, sequi qui."
+            question : "Can I see a preview of the t-shirt design before I place my order?",
+        answers: "Yes, we provide a preview of the design on the product page for each t-shirt."
         },
         {
-            question : "Question 4?",
-        answers: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta dolore, inventore fugiat tempora dignissimos expedita illo sequi eos libero minus, suscipit quia vero ipsa blanditiis! Dignissimos, sequi qui."
+            question : "How long will it take for my t-shirt to be shipped?",
+        answers: "The shipping time for your t-shirt will depend on your location. Standard shipping typically takes 3-7 business days, while expedited shipping options may be available for an additional fee."
         },
       
     ];
@@ -46,7 +49,9 @@ const FAQ = () => {
                         }}>
                             <div className={style.question} >
                                 <h3>{item.question}</h3>
-                                <img src={require('../../../assets/down-arrow.png')} alt="" className={selected === i ? `${style.reverse}`:""}/>
+                                {/* <img src={require('../../../assets/down-arrow.png')} alt="" className={selected === i ? `${style.reverse}`:""}/> */}
+                                <FaAngleDown className={selected === i ? `${style.reverse}`:""}/>
+
                             </div>
 
                             <div className={selected ===i ? `${style.answers} ${style.show}` : `${style.answers}`}>

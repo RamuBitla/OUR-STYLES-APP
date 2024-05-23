@@ -1,6 +1,6 @@
 .signup_container {
 	width: 100%;
-	min-height: 100vh;
+	height: 100vh;
 	background-color: #f5f5f5;
 	display: flex;
 	align-items: center;
@@ -9,7 +9,7 @@
 
 .signup_form_container {
 	width: 900px;
-	height: 500px;
+	/* height: 500px; */
 	display: flex;
 	border-radius: 10px;
 	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
@@ -30,12 +30,13 @@
 .signup_form_container .left h1 {
 	margin-top: 0;
 	color: white;
-	font-size: 35px;
+	font-size: 30px;
 	align-self: center;
 }
 
 .signup_form_container .right {
 	flex: 2;
+	padding: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -183,8 +184,17 @@ form p{
 .right h1 {
 	margin-top: 0;
 	color: white;
-	font-size: 40px;
+	font-size: 30px;
 	align-self: center;
+}
+
+.forgotpwd {
+	color: #222;
+}
+
+.forgotpwd a{
+	color: red;
+	text-decoration: underline;
 }
 
 .white_btn,
@@ -211,6 +221,10 @@ form p{
 	color: red;
 }
 
+.login_form_container .forgetpwd{
+	color: red;
+}
+
 
 /* LOGOUT SECTION */
 .logout{
@@ -218,5 +232,10 @@ form p{
 	justify-content: center;
 	align-items: center;
 	gap: 20px;
+  }
+
+  .logout span {
+	color: white;
+	z-index: 1;
   }
   

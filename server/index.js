@@ -7,10 +7,16 @@ const DBconnection = require('./DB/DBconnection');
 
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
+
+// app.use(cors());
 
 app.options('*', cors());
 // app.use(cookieParser());

@@ -1,10 +1,8 @@
 import React from "react";
-// import { useAuthContext } from "../../Hooks/useAuthContext";
-// import { useLogout } from "../../Hooks/useLogout";
 import { Link } from "react-router-dom";
 
-
 import style from "./style.module.css";
+
 import Products from "../Pages/products";
 import Footer from "../Main/components/Footer";
 import Logout from "../Auth/Logout";
@@ -16,17 +14,10 @@ import { IoCartOutline } from "react-icons/io5";
 import { MdCurrencyRupee } from "react-icons/md";
 import { IoStarSharp } from "react-icons/io5";
 
-const TshirtView = () => {
-  // const {user} = useAuthContext();
-  // const { logout } = useLogout();
-  // const navigate = useNavigate();
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token");
-  //   logout();
-  //   navigate("/"); // Navigate to the main page
-  // };
-
+const TshirtView = ({ setProDetail }) => {
+  const detailPage = (Product) => {
+    setProDetail([{ ...Product }]);
+  };
   return (
     <>
       <div className={style.nav_container}>
@@ -37,13 +28,7 @@ const TshirtView = () => {
             </Link>
           </div>
           <div className={style.nav_logout}>
-            {/* {user && (
-              <div className={style.logout}>
-                <span>{user.email}</span>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )} */}
-            <Logout/>
+            <Logout />
             <img src={cart} alt="" />
             <div className={style.nav_cart_count}>6</div>
           </div>
@@ -52,22 +37,22 @@ const TshirtView = () => {
       <div className={style.hero_section}>
         <img src={hero} alt="" />
         <div className={style.layer}></div>
-        <h2>T-Shirts for Every Occasion!</h2>
+        <h2>T-Shirts For Every Occasion!</h2>
         <p>
           From casual to formal, we have got you covered with our wide range of
           t-shirts.
         </p>
       </div>
 
-      <section id={style.product1} className="section-p1">
+      <section id={style.product1}>
         <div className={style.pro_container}>
-          {Products().map((item, index) => (
+          {Products().map((curElem, index) => (
             <div className={style.product} key={index}>
-              <img src={item.img} alt="product" />
+              <img src={curElem.img} alt="product" />
               <div className={style.item}>
-                <span>{item.brand}</span>
+                <span>{curElem.brand}</span>
                 <h5>Cartoon Astronaut T-Shirt</h5>
-                <p>{item.title}</p>
+                <p>{curElem.title}</p>
                 <div className="stars">
                   <IoStarSharp />
                   <IoStarSharp />
@@ -77,16 +62,27 @@ const TshirtView = () => {
                 </div>
                 <h4>
                   <MdCurrencyRupee />
-                  {item.price}
+                  {curElem.price}
                 </h4>
               </div>
-              <Link>
+              <Link to="/cart-page">
                 <IoCartOutline className={style.icon} />
               </Link>
+                <Link to="/single-product">
+              <div className={style.overlayer} onClick={() => detailPage(curElem)}>
+                  <button
+                    onClick={() => detailPage(curElem)}
+                    className={style.btn}
+                  >
+                    View T-shirt
+                  </button>
+              </div>
+                </Link>
             </div>
           ))}
         </div>
       </section>
+
       <Footer />
     </>
   );

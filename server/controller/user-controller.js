@@ -3,6 +3,7 @@ const User = require("../model/user-model");
 const jwt = require("jsonwebtoken");
 const dotenv = require('dotenv');
 dotenv.config();
+const nodemailer = require('nodemailer')
 
 
 //? -------------------------------------------- Signup Controller -------------------------------------------------------
@@ -122,4 +123,76 @@ const getUser = async (req, res, next) => {
   return res.status(200).json({ message: user });
 };
 
-module.exports = { signup, login, verifyToken, getUser };
+//forgot-password:
+const forgotPassword = async (req, res, next) => {
+  const { email } = req.body;
+  User.findOne({ email: email })
+    .then((user) => {
+      if (!user) {
+        return res.send({ Status: "User not existed" });
+      }
+      const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+        expiresIn: "1d",
+      });
+      var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
+
+      var mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Reset Your Password link :",
+        text: `http://localhost:3000/reset-password/${user._id}/${token}`,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          return res.send({ Status: "Error sending email" });
+        } else {
+          console.log("Email sent: " + info.response);
+          return res.send({ Status: "Success" });
+        }
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Server error");
+    });
+}
+
+//reset-password:
+const resetPassword = async( req, res, next) => {
+  const { id, token } = req.params
+  const { password } = req.body
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    if (err) {
+      console.error("Error verifying token:", err);
+      return res.status(400).json({ Status: "error with token" });
+    }
+
+    bcrypt.hash(password, 10)
+      .then((hash) => {
+        User.findByIdAndUpdate({ _id: id }, { password: hash })
+          .then(() => res.status(200).json({ Status: "success" }))
+          .catch((updateErr) => {
+            console.error("Error updating password:", updateErr);
+            res.status(500).json({ Status: "error updating password" });
+          });
+      })
+      .catch((hashErr) => {
+        console.error("Error hashing password:", hashErr);
+        res.status(500).json({ Status: "error hashing password" });
+      });
+  });
+}
+
+module.exports = { signup, login, verifyToken, getUser, forgotPassword, resetPassword };

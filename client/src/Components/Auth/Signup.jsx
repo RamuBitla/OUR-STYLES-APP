@@ -9,23 +9,79 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const handleChange = (e) => {
     setInputs((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+
+    if (e.target.name === "email") {
+      validateEmail(e.target.value);
+    } else if (e.target.name === "password") {
+      validatePassword(e.target.value);
+    }
+     else if (e.target.name === "confirmPassword") {
+      validateConfirmPassword(inputs.password, e.target.value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const validatePassword = (password) => {
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const validateConfirmPassword = (password, confirmPassword) => {
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setConfirmPasswordError("");
+    if (emailError || passwordError || confirmPasswordError ) {
+      return;
 
-    await signup(inputs.name, inputs.email, inputs.password);
+    }
+
+    if (inputs.password !== inputs.confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      return;
+    }
+
+
+    await signup(
+      inputs.name,
+      inputs.email,
+      inputs.password,
+      inputs.confirmPassword
+    );
     setInputs({
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     });
   };
 
@@ -62,7 +118,7 @@ const Signup = () => {
               required
               className={style.input}
             />
-
+{emailError && <p className={style.error_message}>{emailError}</p>}
             <input
               type="password"
               placeholder="Password"
@@ -73,7 +129,22 @@ const Signup = () => {
               className={style.input}
               id=""
             />
-
+            {passwordError && (
+              <p className={style.error_message}>{passwordError}</p>
+            )}
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              onChange={handleChange}
+              value={inputs.confirmPassword}
+              required
+              className={style.input}
+              id=""
+            />
+             {confirmPasswordError && (
+              <p className={style.error_message}>{confirmPasswordError}</p>
+            )}
             <div className={style}>
               <button type="submit" className={style.green_btn}>
                 Sign Up

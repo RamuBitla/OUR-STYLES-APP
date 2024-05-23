@@ -231,9 +231,10 @@ a{
   align-items: center;
   justify-content: center;
   padding: 30px 30px;
+  width: 100%;
 }
 .faq {
-  width: 100%;
+  width: 80%;
   padding: 10px 10px;
   display: flex;
   align-items: center;
@@ -241,11 +242,11 @@ a{
 }
 
 .faq .item {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   flex-direction: column;
   color: white;
 }
@@ -253,12 +254,12 @@ a{
 .faq .item .wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
+  /* align-items: center; */
   flex-direction: column;
   background-color: #28b3d6;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 5px;
+  width: 100%;
 }
 
 .faq .item .question {
@@ -266,14 +267,16 @@ a{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 16px;
 }
 
-.faq .item .question img {
+.faq .item .question .faqIcon {
   width: 30px;
   transition: all 0.5s cubic-bezier(0, 1, 0, 1);
 }
 
 .item .answers {
+  font-size: 14px;
   max-height: 0;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0, 1, 0, 1);

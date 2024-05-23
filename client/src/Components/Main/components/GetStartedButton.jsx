@@ -14,7 +14,7 @@ const GetStartedButton = () => {
     <div className={style.get_started_container}>
         <div className={style.get_title}>
         <h1 className={style.title}>OUR STYLE</h1>
-        <p>custom design T-Shirt generator ecommerce application</p>
+        <p>Custom Design T-Shirt Generator eCommerce Application</p>
         </div>
         <div className={style.get_started_button}>
         {isLoggedIn ? (
